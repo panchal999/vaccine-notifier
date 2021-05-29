@@ -4,10 +4,30 @@ It takes input as music/song file path and other filter option for vaccine slot 
 ## Installation
 ```pip install vaccine-notifier```
 
-## Usage
-
+### From PyPI
 ```
-usage: trigger.py [-h] [-p PINCODES] [-d DATES] [-v VACCINE] [-l LOG] music
+pip3 install whispers
+```
+
+### From GitHub
+```
+git clone https://github.com/panchal999/vaccine-notifier
+python3 -m venv testenv
+source testenv/bin/activate
+python setup.py install
+```
+
+## Features
+- Play Music/Song when vaccine slot detected
+- Send customized desktop notification includes Pincode, Address and Date for available vaccine centers
+- More details about Vaccine Centers updated in log file 
+
+## Usage
+### CLI
+```
+❯ vaccine-notifier -h
+usage: vaccine-notifier [-h] [-p PINCODES] [-d DATES] [-v VACCINE] [-l LOG]
+                        music
 
 positional arguments:
   music                 Path of Music or Song file. Play when vaccination
