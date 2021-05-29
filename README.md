@@ -2,12 +2,10 @@
 It takes input as music/song file path and other filter option for vaccine slot booking (given in usage section), Notifies you when vaccine slots are open for booking by sending desktop notification with song/music playing. 
 
 ## Installation
-```pip install vaccine-notifier```
 
 ### From PyPI
-```
-pip3 install whispers
-```
+```pip install vaccine-notifier```
+
 
 ### From GitHub
 ```
