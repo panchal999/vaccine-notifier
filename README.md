@@ -41,7 +41,7 @@ optional arguments:
   -v VACCINE, --vaccine VACCINE
                         Vaccine Names, Comma Seprated if multiple FROM
                         (covishild, covaxin, sputnik)
-  -l LOG, --log LOG     Log File to Store Logs (Default siren_log.log file in
+  -l LOG, --log LOG     Log File to Store Logs (Default vaccine_log.log file in
                         current directory
 ```
 

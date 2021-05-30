@@ -35,4 +35,5 @@ setup(
             "vaccine-notifier=trigger:main"
         ]
     }   
+
 )

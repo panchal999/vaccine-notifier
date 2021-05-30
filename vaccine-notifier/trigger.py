@@ -65,18 +65,29 @@ def check_available_slot(response_dict, selected_dates = [],
     return is_available
 
 def _check_and_update_cache(session, center):
-    vdb = shelve.open("vaccinedb", writeback=True)
+    vdb = shelve.open("/tmp/vaccinedb.db", writeback=True)
     key = str(center["center_id"])+","+session["session_id"]
     current_ts = int(time.time())
-    
     try:
         if key in vdb:
             if vdb[key]["available_capacity"] <  session["available_capacity"]:
                 vdb[key]["available_capacity"] =  session["available_capacity"]
+                vdb[key]["timestamp"] = current_ts
+                logging.info("For {0}, {1}, {2} : Vaccine Slots Incremented ".format(session["date"],
+                                    center["address"], center["pincode"]))
                 return True
-            elif vdb[key]["timestamp"] - current_ts > 300:
+            elif (vdb[key]["available_capacity"] ==  session["available_capacity"]) and (current_ts - vdb[key]["timestamp"]) > 300:
+                vdb[key]["timestamp"] = current_ts
+                return False
+            elif (vdb[key]["available_capacity"] >  session["available_capacity"]) and (current_ts - vdb[key]["timestamp"]) > 300:
+                vdb[key]["available_capacity"] = session["available_capacity"]
+                vdb[key]["timestamp"] = current_ts
+                logging.info("For {0}, {1}, {2} : Vaccine Slots Decreased".format(session["date"],
+                                    center["address"], center["pincode"]))
+                return True
+            elif vdb[key]["available_capacity"] == 0:
                 del vdb[key]
-                return True
+                return False
             else:
                 return False
         else:
@@ -131,10 +142,9 @@ def main():
             logging.info("Vaccination Center detected!")
             play_siren(args.music)
         else:
-            logging.info("No vaccination Center Detected!")
+            logging.info("No New Vaccination Center Detected!")
 
     else:
         print("Pincode Not Entered!")
-
 if __name__ == '__main__':
     main()
